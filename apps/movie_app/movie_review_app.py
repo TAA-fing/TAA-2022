@@ -13,7 +13,7 @@ import joblib
 # Page Title
 ######################
 
-image = Image.open('imdb_logo.png')
+image = Image.open('./imdb_logo.png')
 
 st.image(image, use_column_width=True)
 
