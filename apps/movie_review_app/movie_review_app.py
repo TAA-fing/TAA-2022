@@ -13,7 +13,7 @@ import joblib
 # Page Title
 ######################
 
-image = Image.open('imdb_logo.png')
+image = Image.open('apps/movie_review_app/imdb_logo.png')
 
 st.image(image, use_column_width=True)
 
@@ -54,7 +54,7 @@ st.write("""
 ############################
 #  Load classifier
 ############################
-loaded_clf = joblib.load('log_reg_model.pkl')
+loaded_clf = joblib.load('apps/movie_review_app/log_reg_model.pkl')
 prediction = loaded_clf.predict([sequence])
 
 ## Prints the input DNA sequence
