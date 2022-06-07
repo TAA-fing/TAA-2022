@@ -23,6 +23,20 @@ This app classifies a movie review as positive or negative
 ***
 """)
 
+############################
+#  Load classifier
+############################
+
+def load_model(model_path):
+    model = joblib.load(model_path)
+    #st.write('model succesfully loaded!')
+    return model
+
+model_path = 'apps/movie_review_app/log_reg_model.pkl'
+
+if 'model' not in st.session_state:
+    st.session_state['model'] = load_model(model_path)
+
 
 ######################
 # Input Text Box
@@ -37,7 +51,6 @@ sequence_input = "This is the worst work ever of Daniel Day Lewis..... I can not
 sequence = st.text_area("Sequence input", sequence_input, height=250)
 
 
-
 def simple_preprocessor(text):
     text = re.sub('<.*?>','',text)      # se eliminan los tags html
     text = re.sub('[\W]+', ' ', text)  # se eliminan caracteres 'non-words' 
@@ -50,18 +63,13 @@ sequence = simple_preprocessor(sequence)
 st.write("""
 ***
 """)
+prediction = st.session_state['model'].predict([sequence])
 
-############################
-#  Load classifier
-############################
-loaded_clf = joblib.load('apps/movie_review_app/log_reg_model.pkl')
-prediction = loaded_clf.predict([sequence])
 
-## Prints the input DNA sequence
+## Prints the input sequence
 st.header('MODEL INPUT')
 st.write(sequence)
 
-## DNA nucleotide count
 st.header('MODEL OUTPUT (Sentiment)')
 st.write('Positive review' if prediction else 'Negative review')
 
